@@ -5,6 +5,10 @@ export const siteConfig = {
 	description: "Report scientific erros anonymously with ease.",
 	navItems: [
 		{
+			label: "Papers",
+			href: "/papers",
+		},
+		{
 			label: "About",
 			href: "/about",
 		},
@@ -16,6 +20,10 @@ export const siteConfig = {
 	],
 	navMenuItems: [
 		{
+			label: "Papers",
+			href: "/papers",
+		},
+		{
 			label: "About",
 			href: "/about",
 		},
@@ -26,10 +34,8 @@ export const siteConfig = {
 		
 	],
 	links: {
-		github: "https://github.com/nextui-org/nextui",
-		twitter: "https://twitter.com/getnextui",
-		docs: "https://nextui.org",
-		discord: "https://discord.gg/9b6yyZKmH4",
+		github: "https://github.com/DeSciDegen/zkCert",
+	
     sponsor: "https://patreon.com/jrgarciadev"
 	},
 };
