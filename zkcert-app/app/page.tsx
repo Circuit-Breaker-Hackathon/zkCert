@@ -5,6 +5,7 @@ import { button as buttonStyles } from "@nextui-org/theme";
 import { siteConfig } from "@/config/site";
 import { title, subtitle } from "@/components/primitives";
 import { GithubIcon } from "@/components/icons";
+import { DynamicWidget } from "../lib/dynamic";
 
 export default function Home() {
   return (
@@ -22,16 +23,9 @@ export default function Home() {
       </div>
 
       <div className="flex gap-3">
-        <Link
-          href="/"
-          className={buttonStyles({
-            color: "secondary",
-            radius: "full",
-            variant: "shadow",
-          })}
-        >
-          Get Started
-        </Link>
+        <DynamicWidget
+          innerButtonComponent={<button>Get Started</button>}
+        ></DynamicWidget>
         <Link
           className={buttonStyles({ variant: "bordered", radius: "full" })}
           href="/about"

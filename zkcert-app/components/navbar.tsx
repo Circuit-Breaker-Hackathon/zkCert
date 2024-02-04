@@ -26,7 +26,7 @@ import {
   HeartFilledIcon,
   SearchIcon,
 } from "@/components/icons";
-
+import { DynamicWidget } from "../lib/dynamic";
 import { Logo } from "@/components/icons";
 
 export const Navbar = () => {
@@ -75,15 +75,9 @@ export const Navbar = () => {
         </NavbarItem>
 
         <NavbarItem className="hidden md:flex">
-          <Button
-            isExternal
-            as={Link}
-            className="text-sm font-normal text-default-600 bg-default-100"
-            href={siteConfig.links.sponsor}
-            variant="flat"
-          >
-            Sign Up
-          </Button>
+          <DynamicWidget
+            innerButtonComponent={<button>Sign Up</button>}
+          ></DynamicWidget>
         </NavbarItem>
       </NavbarContent>
 

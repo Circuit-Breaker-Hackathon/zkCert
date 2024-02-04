@@ -9,6 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@dynamic-labs/ethereum": "^1.0.9",
+    "@dynamic-labs/ethers-v5": "^1.0.9",
+    "@dynamic-labs/sdk-react-core": "^1.0.9",
     "@nextui-org/button": "2.0.26",
     "@nextui-org/code": "2.0.24",
     "@nextui-org/input": "2.1.16",
