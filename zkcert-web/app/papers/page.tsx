@@ -225,7 +225,12 @@ export default function PapersPage() {
 
       <div className="flex flex-wrap gap-4 items-center mt-10">
         {colors.map((color) => (
-          <Pagination total={10} initialPage={1} color="secondary" />
+          <Pagination
+            key={color}
+            total={10}
+            initialPage={1}
+            color="secondary"
+          />
         ))}
       </div>
     </>

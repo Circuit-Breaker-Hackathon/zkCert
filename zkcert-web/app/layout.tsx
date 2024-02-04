@@ -64,7 +64,7 @@ export default function RootLayout({
                   title="EthGlobal"
                 >
                   <span className="text-default-600">Built with 💖 by</span>
-                  <p className="text-secondary">Web3 Enthusiast's</p>
+                  <p className="text-secondary">Web3 Enthusiasts</p>
                 </Link>
               </footer>
             </div>
