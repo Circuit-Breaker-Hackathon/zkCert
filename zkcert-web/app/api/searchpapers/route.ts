@@ -5,8 +5,9 @@ import { NextResponse } from 'next/server';
 
 export async function GET(request: Request) {
     try {
-        const searchParams = new URLSearchParams(request.url.search.toString());
+        const searchParams = new URLSearchParams(new URL(request.url).search);
         const doi = searchParams.get('doi');
+        
 
         const result = await sql`
             SELECT * FROM science_papers WHERE doi = ${doi};

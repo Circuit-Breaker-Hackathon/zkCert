@@ -15,7 +15,7 @@ interface Paper {
   title: string;
   journal: string;
   abstract: string;
-
+  doi: string;
   year: string;
   // Add other paper properties as needed
 }
@@ -23,7 +23,10 @@ interface Paper {
 export default function PapersPage() {
   const [papers, setPapers] = useState<Paper[]>([]);
   const [isLoaded, setIsLoaded] = React.useState(false);
+  const [doi, setDoi] = useState(""); // State for DOI search query
+  const [searchPerformed, setSearchPerformed] = useState(false);
 
+  // on page load, fetch all papers from the database
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -39,20 +42,72 @@ export default function PapersPage() {
 
     fetchData(); // call the function to fetch papers
   }, []);
+
+  const searchFetchData = async (searchDoi = "") => {
+    setIsLoaded(false);
+    const encodedDoi = encodeURIComponent(searchDoi); // Ensure the DOI is URL-encoded
+    const apiUrl = `/api/searchpapers${searchDoi ? `?doi=${encodedDoi}` : ""}`;
+
+    try {
+      const response = await fetch(apiUrl);
+      if (!response.ok) throw new Error("Data fetch failed");
+      const data = await response.json();
+      setPapers(data.result);
+      setSearchPerformed(!!searchDoi);
+    } catch (error) {
+      console.error("Failed to fetch papers:", error);
+    } finally {
+      setIsLoaded(true);
+    }
+  };
+
+  // Fetch all papers from the database for clear method
+  const fetchData = async () => {
+    try {
+      const response = await fetch("/api/displaypapers");
+      if (!response.ok) throw new Error("Data fetch failed");
+      const data = await response.json();
+      setPapers(data.result);
+      setIsLoaded(true);
+    } catch (error) {
+      console.error("Failed to fetch papers:", error);
+    }
+  };
+
+  const handleSearch = () => {
+    searchFetchData(doi.trim()); // Fetch data with DOI search query
+  };
+
+  const handleClear = () => {
+    setDoi(""); // Clear the DOI input
+    fetchData(); // Fetch all papers again without a DOI query
+    setSearchPerformed(false); // Reset the search performed state
+  };
   return (
     <div className="flex flex-col gap-3">
-      {/* Search Section */}
       <div>
         <h1 className={title()}>Browse and Search for Papers 📃</h1>
-      </div>
-      <div className="flex w-full flex-wrap md:flex-nowrap gap-4 mt-5 mb-5">
-        <Input type="email" label="Search for Papers" />
-        <Button variant="shadow" color="secondary" size="lg">
-          Search 🔎{" "}
-        </Button>
+        <div className="flex w-full flex-wrap md:flex-nowrap gap-4 mt-5 mb-5">
+          <Input
+            label="Search by DOI"
+            value={doi}
+            onChange={(e) => setDoi(e.target.value)}
+          />
+          <Button
+            variant="shadow"
+            color="secondary"
+            size="lg"
+            onClick={handleSearch}
+          >
+            Search 🔎
+          </Button>
+          <Button variant="shadow" size="md" onClick={handleClear}>
+            {" "}
+            Clear ✖️{" "}
+          </Button>
+        </div>
       </div>
 
-      {/* Papers Section */}
       {!isLoaded ? (
         <div className="space-y-4">
           {Array(3)
@@ -82,7 +137,8 @@ export default function PapersPage() {
               )
             )}
         </div>
-      ) : (
+      ) : papers.length > 0 ? (
+        // Render matching paper(s)
         papers.map((paper, index) => (
           <Card key={index} className="max-w-[1000px] mb-3">
             <CardHeader className="flex flex-col items-start">
@@ -109,7 +165,7 @@ export default function PapersPage() {
                 {paper.abstract.length > 200 ? "..." : ""}
               </p>
               {/* Add more paper details here as needed */}
-              <div className="mt-3 grid grid-cols-3">
+              <div className="mt-3 grid md:grid-cols-3">
                 <Chip radius="sm" variant="flat" color="secondary">
                   Published: <span className="font-semibold">{paper.year}</span>
                 </Chip>
@@ -127,15 +183,18 @@ export default function PapersPage() {
             </CardBody>
             <Divider />
             <CardFooter>
-              <a href="" target="_blank" rel="noopener noreferrer">
+              <a target="_blank" rel="noopener noreferrer">
                 Read More
               </a>{" "}
             </CardFooter>
           </Card>
         ))
+      ) : searchPerformed ? (
+        <p>No results found for the provided DOI.</p>
+      ) : (
+        <p>No papers available.</p>
       )}
 
-      {/* Pagination */}
       <div className="flex flex-wrap gap-4 items-center mt-10">
         <Pagination total={10} initialPage={1} color="secondary" />
       </div>
