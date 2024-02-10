@@ -9,6 +9,7 @@ import { Button } from "@nextui-org/button";
 import { Pagination } from "@nextui-org/pagination";
 import { Chip } from "@nextui-org/chip";
 import { Skeleton } from "@nextui-org/skeleton";
+import Link from "next/link";
 
 const colors = ["secondary"];
 interface Paper {
@@ -183,9 +184,7 @@ export default function PapersPage() {
             </CardBody>
             <Divider />
             <CardFooter>
-              <a target="_blank" rel="noopener noreferrer">
-                Read More
-              </a>{" "}
+              <Link href={`/article?doi=${paper.doi}`}> Read More</Link>
             </CardFooter>
           </Card>
         ))
