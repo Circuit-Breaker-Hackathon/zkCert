@@ -1,61 +1,132 @@
+"use client";
 import CommentSection from "@/components/commentSection";
 import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
 import { Image } from "@nextui-org/image";
 import { Chip } from "@nextui-org/chip";
 import { Button } from "@nextui-org/button";
+import { Spinner } from "@nextui-org/spinner";
+import React, { useEffect, useState } from "react";
+import { NextRouter, useRouter } from "next/router";
+// Define a type for the article data
+type Article = {
+  title: string;
+  journal?: string;
+  author?: string;
+  publisher?: string;
+  keywords?: string; // Assuming keywords is a comma-separated string
+  year?: string;
+  month?: string;
+  doi: string;
+  url: string;
+};
 
-export default function ArticlePage() {
+const ArticlePage = () => {
+  const [article, setArticle] = useState<Article | null>(null);
+
+  useEffect(() => {
+    const { search } = window.location;
+    const params = new URLSearchParams(search);
+    const doi = params.get("doi");
+
+    if (doi) {
+      fetch(`/api/getarticle?doi=${encodeURIComponent(doi)}`)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`Failed to fetch article: ${response.statusText}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          if (data.article) {
+            setArticle(data.article);
+          } else {
+            console.error("Article not found");
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching article:", error);
+        });
+    }
+  }, []);
   return (
     <>
-      <div className="relative isolate overflow-hidden px-6 lg:py-10 sm:py-32 lg:overflow-visible lg:px-0">
-        <div className="absolute inset-0 -z-10 overflow-hidden"></div>
-        <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-2 lg:items-start lg:gap-y-10">
-          <div className="lg:col-span-2 lg:col-start-1 lg:row-start-1 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
-            <div className="lg:pr-4">
-              <div className="lg:max-w-lg">
-                <p className="text-base font-semibold leading-7 text-purple-600">
-                  Article
-                </p>
-                <h1 className="mt-2 mb-5 text-3xl font-bold tracking-tight  sm:text-4xl">
-                  Article Title
-                </h1>
-                <Chip className="mr-1" color="secondary">
-                  Keyword
+      {article ? (
+        <>
+          <div className="grid lg:grid-cols-[6fr,2fr] gap-4">
+            <div className="">
+              <p className="text-base font-semibold leading-7 text-purple-600">
+                Article
+              </p>
+
+              <h1 className="mt-2 mb-5 text-3xl font-bold tracking-tight sm:text-4xl">
+                {article.title}
+              </h1>
+
+              <p className="font-light text-lg">
+                Journal:
+                <span className="font-bold"> {article.journal}</span>
+              </p>
+
+              <p className="text-base font-light">
+                Author: <span className="font-bold"> {article.author} </span>
+              </p>
+              <p className="text-base font-light mb-3">
+                Publisher:{" "}
+                <span className="font-bold">{article.publisher} </span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-5 h-5 inline"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                  />
+                </svg>
+              </p>
+              {article.keywords?.split(",").map((keyword, index) => (
+                <Chip key={index} className="mr-1 mb-2" color="secondary">
+                  {keyword.trim()}
                 </Chip>
-                <Chip className="mr-1" color="secondary">
-                  Keyword
-                </Chip>
-                <Chip className="mr-1" color="secondary">
-                  Keyword
-                </Chip>
-              </div>
+              ))}
             </div>
-          </div>
-          <div className="-ml-12 -mt-12 p-12 lg:sticky lg:top-4 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:overflow-hidden">
-            <Card className="max-w-[400px]">
+
+            <Card className="max-w-[350px] max-h-[350px]">
+              {" "}
+              {/* Decreased the width of the card */}
               <CardHeader className="flex gap-3">
-                <Image
-                  alt="nextui logo"
-                  height={40}
-                  radius="sm"
-                  src="https://avatars.githubusercontent.com/u/86160567?s=200&v=4"
-                  width={40}
-                />
                 <div className="flex flex-col">
-                  <p className="text-md">Article Title</p>
-                  <p className="text-small text-default-500">Journal</p>
+                  <p className="text-md px-4">{article.title}</p>
                 </div>
               </CardHeader>
-
               <CardBody>
                 <div className="px-4">
-                  <p className="font-semibold">Author</p>
-                  <p>Publisher</p>
-                  <p>Year Posted</p>
-                  <p>Month Posted</p>
-                  <p>DOI</p>
-                  <a href="#" className="text-primary-500">
-                    URL
+                  <p>Published: {article.year}</p>
+                  <p>Month Posted: {article.month}</p>
+                  <p>DOI: {article.doi}</p>
+                  <a
+                    href={article.url}
+                    className="text-primary-500 hover:underline font-semibold"
+                  >
+                    Read the full article{" "}
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-5 h-5 mb-1 inline"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
+                      />
+                    </svg>
                   </a>
                 </div>
               </CardBody>
@@ -82,44 +153,17 @@ export default function ArticlePage() {
               </CardFooter>
             </Card>
           </div>
-          <div className="lg:col-span-2 lg:col-start-1 lg:row-start-2 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
-            <div className="lg:pr-4">
-              <div className="max-w-xl text-base leading-7  lg:max-w-lg">
-                <p>
-                  Faucibus commodo massa rhoncus, volutpat. Dignissim sed eget
-                  risus enim. Mattis mauris semper sed amet vitae sed turpis id.
-                  Id dolor praesent donec est. Odio penatibus risus viverra
-                  tellus varius sit neque erat velit. Faucibus commodo massa
-                  rhoncus, volutpat. Dignissim sed eget risus enim. Mattis
-                  mauris semper sed amet vitae sed turpis id. Faucibus commodo
-                  massa rhoncus, volutpat. Dignissim sed eget risus enim. Mattis
-                  mauris semper sed amet vitae sed turpis id. Id dolor praesent
-                  donec est. Odio penatibus risus viverra tellus varius sit
-                  neque erat velit. Faucibus commodo massa rhoncus, volutpat.
-                  Dignissim sed eget risus enim. Mattis mauris semper sed amet
-                  vitae sed turpis id.
-                  <br></br>
-                  <br></br>
-                  Faucibus commodo massa rhoncus, volutpat. Dignissim sed eget
-                  risus enim. Mattis mauris semper sed amet vitae sed turpis id.
-                  Id dolor praesent donec est. Odio penatibus risus viverra
-                  tellus varius sit neque erat velit. Faucibus commodo massa
-                  rhoncus, volutpat. Dignissim sed eget risus enim. Mattis
-                  mauris semper sed amet vitae sed turpis id. Faucibus commodo
-                  massa rhoncus, volutpat. Dignissim sed eget risus enim. Mattis
-                  mauris semper sed amet vitae sed turpis id. Id dolor praesent
-                  donec est. Odio penatibus risus viverra tellus varius sit
-                  neque erat velit. Faucibus commodo massa rhoncus, volutpat.
-                  Dignissim sed eget risus enim. Mattis mauris semper sed amet
-                  vitae sed turpis id.
-                </p>
-              </div>
-            </div>
-          </div>
+        </>
+      ) : (
+        // loading spinner
+        <div className="flex justify-center items-center">
+          <Spinner label="Loading..." color="secondary" />
         </div>
+      )}
+      <div>
+        <CommentSection />
       </div>
-
-      <CommentSection />
     </>
   );
-}
+};
+export default ArticlePage;
