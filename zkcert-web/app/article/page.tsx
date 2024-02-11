@@ -161,7 +161,7 @@ const ArticlePage = () => {
         </div>
       )}
       <div>
-        <CommentSection />
+        <CommentSection articleDOI={article?.doi ?? ""} />
       </div>
     </>
   );
