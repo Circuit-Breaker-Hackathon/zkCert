@@ -4,6 +4,7 @@ import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
 import { Image } from "@nextui-org/image";
 import { Chip } from "@nextui-org/chip";
 import { Button } from "@nextui-org/button";
+import { Spinner } from "@nextui-org/spinner";
 import React, { useEffect, useState } from "react";
 import { NextRouter, useRouter } from "next/router";
 // Define a type for the article data
@@ -51,8 +52,8 @@ const ArticlePage = () => {
     <>
       {article ? (
         <>
-          <div className="grid grid-cols-2">
-            <div className="lg:max-w-lg">
+          <div className="grid lg:grid-cols-[6fr,2fr] gap-4">
+            <div className="">
               <p className="text-base font-semibold leading-7 text-purple-600">
                 Article
               </p>
@@ -154,7 +155,10 @@ const ArticlePage = () => {
           </div>
         </>
       ) : (
-        <p>Loading article...</p>
+        // loading spinner
+        <div className="flex justify-center items-center">
+          <Spinner label="Loading..." color="secondary" />
+        </div>
       )}
       <div>
         <CommentSection />
