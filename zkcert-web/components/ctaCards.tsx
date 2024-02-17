@@ -4,7 +4,7 @@ import { Image } from "@nextui-org/image";
 
 const CTACards = () => {
   return (
-    <div className="grid grid-cols-3 mt-10">
+    <div className="grid gap-2 md:grid-cols-3 mt-10">
       {" "}
       <Card className="max-w-[400px]">
         <CardHeader className="flex gap-3">

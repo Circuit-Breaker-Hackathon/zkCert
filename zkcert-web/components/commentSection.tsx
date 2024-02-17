@@ -27,6 +27,7 @@ const CommentSection = ({ articleDOI }: { articleDOI: string }) => {
     fetch(`/api/getcomments?doi=${encodeURIComponent(articleDOI)}`)
       .then((res) => res.json())
       .then((data) => {
+        console.log(data);
         setComments(data.result);
         setIsLoadingComments(false);
       })
@@ -45,7 +46,9 @@ const CommentSection = ({ articleDOI }: { articleDOI: string }) => {
       console.error("Error fetching comments:", error);
     }
   };
-
+  const getUserAddress = () => {
+    return localStorage.getItem("walletAddress") || "";
+  };
   // post a comment
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -54,7 +57,7 @@ const CommentSection = ({ articleDOI }: { articleDOI: string }) => {
     const commentData = {
       Doi: articleDOI,
       Comment_content: comment,
-      User_Address: "UserAdrress",
+      User_Address: getUserAddress(),
     };
 
     try {
@@ -146,6 +149,7 @@ const CommentSection = ({ articleDOI }: { articleDOI: string }) => {
                       />
                       Anonymous
                     </p>
+
                     <p
                       className="text-sm text-gray-600 dark:text-gray-400"
                       title={new Date(comment.timestamp).toLocaleString()}

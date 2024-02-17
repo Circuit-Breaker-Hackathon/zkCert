@@ -10,9 +10,12 @@ import { GithubIcon } from "@/components/icons";
 import { DynamicWidget } from "../lib/dynamic";
 import CTACards from "@/components/ctaCards";
 import { ethers } from "ethers";
+import VerifyModal from "@/components/verify-modal";
+import { useUser } from "@/contexts/userContext";
 
 export default function Home() {
   const [isWidgetClicked, setIsWidgetClicked] = useState(false);
+  const { setIsLoggedIn } = useUser();
 
   useEffect(() => {
     if (typeof window !== "undefined" && window.ethereum && isWidgetClicked) {
@@ -25,6 +28,10 @@ export default function Home() {
             const signer = provider.getSigner();
             const address = await signer.getAddress();
             console.log(address); // Log the address in the console
+            setIsLoggedIn(true);
+            // Set the wallet address in local storage
+            localStorage.setItem("walletAddress", address);
+
             // Inside your useEffect, after successfully getting the address
 
             // Make a POST request to your API endpoint
@@ -38,6 +45,8 @@ export default function Home() {
               .then((response) => response.json())
               .then((data) => {
                 console.log("Success:", data);
+
+                console.log("User is logged in");
                 // Handle success response, update UI or state as necessary
               })
               .catch((error) => {
@@ -78,12 +87,7 @@ export default function Home() {
               </button>
             }
           ></DynamicWidget>
-          <Link
-            className={buttonStyles({ variant: "bordered", radius: "full" })}
-            href="/about"
-          >
-            Learn More
-          </Link>
+          <VerifyModal />
         </div>
 
         <div className="mt-8">
