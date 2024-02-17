@@ -75,32 +75,33 @@ const page = () => {
           <h2 className="font-semibold">How to get your email signature?</h2>
           <ol className="list-decimal text-left mt-1">
             <li>
-              Open the Sent Email: Go to your "Sent" folder and open the email
-              in question.
+              Open the Sent Email: Go to your &quot;Sent&quot; folder and open
+              the email in question.
             </li>
             <li>
               View Email Source or Headers: Look for an option to view the
-              email's source, full headers, or similar. This option might be
+              emails source, full headers, or similar. This option might be
               found in different places depending on your email client: In
               web-based clients like Gmail, you might find it in the dropdown
               menu at the top right of the email (represented by three dots),
-              labeled as "Show original" or something similar. In desktop
-              clients like Outlook, you might need to right-click the email,
-              select "Properties," and then look for "Internet headers" or go to
-              "File" - "Properties" - "Internet headers".
+              labeled as &quot;Show original&quot; or something similar. In
+              desktop clients like Outlook, you might need to right-click the
+              email, select &quot;Properties,&quot; and then look for
+              &quot;Internet headers&quot; or go to &quot;File&quot; -
+              &quot;Properties&quot; - &quot;Internet headers&quot;.
             </li>
             <li>
               Locate the Digital Signature: Within the email headers or source
               view, you might see fields related to digital signatures such as
-              "DKIM-Signature" (DomainKeys Identified Mail), "X-Sender-ID," or
-              similar. These fields contain information used to validate the
-              email's origin and integrity.
+              &quot;DKIM-Signature&quot; (DomainKeys Identified Mail),
+              &quot;X-Sender-ID,&quot; or similar. These fields contain
+              information used to validate the emails origin and integrity.
             </li>
             <li>
               Understanding the Signature: Interpreting the actual content of
-              these fields can be complex, as they're meant to be read by
+              these fields can be complex, as they are meant to be read by
               machines rather than humans. They typically contain a hash value
-              or cryptographic key that email servers use to verify the email's
+              or cryptographic key that email servers use to verify the emails
               authenticity.
             </li>
           </ol>
