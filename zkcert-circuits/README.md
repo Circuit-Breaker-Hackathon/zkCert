@@ -121,7 +121,7 @@ We need snarkjs but may use different forks of it.
 
 Perform Powers of Tau, find our circuit by CIRCUIT_NAME, setup groth16 keys, export a verification key for our circuit, as well as solidity code for a verifier contract for our circuit.
 
-The process follows the scripts in zk-email-verify/packages/twitter-verifier-circuits/scripts but is handled by running the TypeScript [proof-of-twitter/packages/circuits/scripts/dev-setup.ts](dev-setup.ts). This command in the [https://prove.email/blog/twitter](blog post) will not work so use that script instead:
+The process follows the scripts in zk-email-verify/packages/twitter-verifier-circuits/scripts but is handled by running the TypeScript [proof-of-twitter/packages/circuits/scripts/dev-setup.ts](dev-setup.ts). This command in the [blog post](https://prove.email/blog/twitter) will not work so use that script instead:
 
 `snarkjs zkey new pot12_final.ptau twitter.wasm twitter_0000.zkey`
 
