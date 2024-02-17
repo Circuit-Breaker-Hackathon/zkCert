@@ -2,7 +2,7 @@
 
 ZkCert uses zero-knowledge proofs to attest the provenance of a comment on an article without revealing the identity of the commenter.
 
-The architecture is based on [https://github.com/zkemail](ZK Email) and their packages and other repos for generating Circom templates, email verifier circuits, regex templates and helpers to match and extract strings from a signed email, set up zk-SNARKs and witnesses, generate Groth16 proving and verifying keys, and optionally generate a Solidity contract to verify proofs on chain in order to trigger other Solidity code to update contract state from the posted comment.
+The architecture is based on [ZK Email](https://github.com/zkemail) and their packages and other repos for generating Circom templates, email verifier circuits, regex templates and helpers to match and extract strings from a signed email, set up zk-SNARKs and witnesses, generate Groth16 proving and verifying keys, and optionally generate a Solidity contract to verify proofs on chain in order to trigger other Solidity code to update contract state from the posted comment.
 
 # Regex
 
