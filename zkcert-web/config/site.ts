@@ -34,8 +34,8 @@ export const siteConfig = {
 		
 	],
 	links: {
-		github: "https://github.com/DeSciDegen/zkCert",
+		github: "https://github.com/Circuit-Breaker-Hackathon/zkCert",
 	
-    sponsor: "https://patreon.com/jrgarciadev"
+    sponsor: "https://patreon.com"
 	},
 };
