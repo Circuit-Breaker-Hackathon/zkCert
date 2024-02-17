@@ -60,7 +60,8 @@ maxMessageLength: MAX_HEADER_PADDED_BYTES, // Maximum allowed length of the mess
 fs.writeFileSync("./input.json", JSON.stringify(circuitInputs));
 ```
 
-`npx ts-node inputs.ts`
+Run: `npx ts-node inputs.ts`
+
 Generates an "input.json".
 
 N.B. The number of padded bytes for the body can be optimized for shorter custom emails and reduce compile times and proving key times.
@@ -69,6 +70,8 @@ N.B. The number of padded bytes for the body can be optimized for shorter custom
 
 [proof-of-twitter/packages/circuits/components/twitter_reset_regex.circom](components/twitter_reset_regex.circom)
 [proof-of-twitter/packages/circuits/components/twitter_reset.json](components/twitter_reset.json)
+
+NOTE: The name "Twitter" remains unchanged but should be ZkCert.
 
 The output from the tool (at tool.zkregex.com) replaces the forked (then ideally renamed) Twitter regex Circom and JSON used to specify to the api library what string to match and which parts to parse out and make public: AUTH or POST, and the hex code representing a password or comment hash.
 
@@ -129,6 +132,8 @@ The process follows the scripts in zk-email-verify/packages/twitter-verifier-cir
 Finally, run the script to generate a proof which can then be verified with snarkjs or by the generated verifier contract.
 
 Deploy [Verifier.sol](Verifier.sol) with foundry (revert pragma for solidity compiler version 0.8.x). Test with a local DKIM registry contract with pubkeys for the email servers of institutions you want to test.
+
+ABI: function verify(uint[] memory input, Proof memory proof) internal view returns (uint)
 
 The proof (proof.json) can also be generated in the browser and verified. See example code:
 `zk-email-verify/packages/twitter-verifier-app/pages/MainPage.tsx`
