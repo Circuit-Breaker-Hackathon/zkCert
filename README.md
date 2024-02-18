@@ -1,7 +1,7 @@
 # zkCert
 Circuit Breaker ETH Global hackathon project. An academic certification protocol that preserves user's privacy.
 
-Code for the UI implementation can be found in [zkcert-web](https://github.com/Circuit-Breaker-Hackathon/zkCert/tree/main/zkcert-circuits), code for the zk verification of user institutional email can be found in zkcert-circuits
+Code for the UI implementation can be found in [zkcert-web](https://github.com/Circuit-Breaker-Hackathon/zkCert/tree/main/zkcert-circuits), code for the zk verification of user institutional email can be found in [zkcert-circuits](https://github.com/Circuit-Breaker-Hackathon/zkCert/tree/main/zkcert-circuits)
 
 The scientific community can be very sensitive to whistleblowers and honest scientific mistake reports. For this reason, most scientists prefer to make comments on scientific articles anonymously, avoiding the backlash it comes with. 
 
