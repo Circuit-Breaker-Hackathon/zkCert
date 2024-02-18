@@ -23,7 +23,7 @@ export default function AboutPage() {
         email signature with the random word included in it. In this way, the
         app verifies the email ownership and timestamps the verification using
         the random word. Using zk technology, the app will verify the
-        @institution domain of the user's email without exposing the full email.
+        @institution domain of the users email without exposing the full email.
         Once the institutional email is verified, the anonymous user can still
         comment anonymously with a badge that credits their affiliation.{" "}
       </p>
