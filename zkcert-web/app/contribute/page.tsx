@@ -3,7 +3,7 @@ import { title } from "@/components/primitives";
 export default function ContributePage() {
   return (
     <div>
-      <h1 className={title()}>Contribute to ZkPeer 👩‍💻 </h1>
+      <h1 className={title()}>Contribute to ZkCert 👩‍💻 </h1>
       <a
         href="https://github.com/Circuit-Breaker-Hackathon/zkCert"
         type="button"
@@ -25,11 +25,11 @@ export default function ContributePage() {
         Contribute on Github
       </a>
       <p className="mt-5">
-        ZkPeer is a open source project feel free to help improve the project.{" "}
+        ZkCert is a open source project feel free to help improve the project.{" "}
       </p>
       <br />
       <p>
-        Contributing to an open-source project like ZkPeer offers a unique
+        Contributing to an open-source project like ZkCert offers a unique
         opportunity to collaborate on a platform where innovation and community
         come together. Open-source projects thrive on the diversity of their
         contributors, bringing different perspectives, skills, and ideas to the
@@ -37,7 +37,7 @@ export default function ContributePage() {
       </p>
       <br />
       <p>
-        By getting involved with ZkPeer, you are not just coding; you are part
+        By getting involved with ZkCert, you are not just coding; you are part
         of a collective effort to improve, innovate, and push the project
         forward. Whether you are fixing bugs, adding new features, improving
         documentation, or helping with design and testing, your work directly
